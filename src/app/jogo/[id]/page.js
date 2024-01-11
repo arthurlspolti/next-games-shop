@@ -10,7 +10,7 @@ const DetalheJogos = ({ params }) => {
     preco: "",
     descricao: "",
     comentarios: "",
-    imagemUrl: "https://via.placeholder.com/500",
+    imagemUrl: "",
   });
 
   useEffect(() => {
