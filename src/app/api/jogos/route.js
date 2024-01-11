@@ -1,4 +1,4 @@
-import prisma from '@/services/prisma';
+import prisma from "@/services/prisma";
 
 export const GET = async () => {
   const jogos = await prisma.jogo.findMany();

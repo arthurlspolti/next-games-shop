@@ -41,21 +41,21 @@ export default function Home() {
             className="rounded-md p-4 bg-gray-600 hover:bg-gray-700 text-white"
             onClick={() => setClasseSelecionada(1)}
           >
-            Tiro em Primeira Pessoa
+            Esporte
           </button>
 
           <button
             className="rounded-md p-4 bg-gray-600 hover:bg-gray-700 text-white"
             onClick={() => setClasseSelecionada(2)}
           >
-            Tiro em Terceira Pessoa
+            Tiro em Primeira Pessoa
           </button>
 
           <button
             className="rounded-md p-4 bg-gray-600 hover:bg-gray-700 text-white"
             onClick={() => setClasseSelecionada(3)}
           >
-            Esporte
+            Tiro em Terceira Pessoa
           </button>
         </div>
 
