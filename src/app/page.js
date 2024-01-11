@@ -4,6 +4,7 @@ import Card from '@/components/cardJogos';
 
 export default function Home() {
   const [jogos, setJogos] = useState([]);
+  const [classeSelecionada, setClasseSelecionada] = useState(null);
 
   useEffect(() => {
     const buscarDados = async () => {
@@ -19,11 +20,22 @@ export default function Home() {
     buscarDados();
   }, []);
 
+  const jogosFiltrados = classeSelecionada
+    ? jogos.filter((jogo) => jogo.classeId === classeSelecionada)
+    : jogos;
+
   return (
     <>
-      <div></div>
+      <div>
+        <div>
+          <button onClick={() => setClasseSelecionada(null)}>Todos</button>
+          <button onClick={() => setClasseSelecionada(1)}>Tiro em Primeira Pessoa</button>
+          <button onClick={() => setClasseSelecionada(2)}>Tiro em Terceira Pessoa</button>
+          <button onClick={() => setClasseSelecionada(3)}>Esporte</button>
+        </div>
+      </div>
       <div className="flex justify-center items-center flex-wrap gap-4">
-        {jogos.map((jogo) => (
+        {jogosFiltrados.map((jogo) => (
           <Card
             key={jogo.id}
             titulo={jogo.titulo}
