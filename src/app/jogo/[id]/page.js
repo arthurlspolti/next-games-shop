@@ -3,6 +3,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ArrowLeft } from "lucide-react";
 
 const DetalheJogos = ({ params }) => {
   const [detalheJogos, setDetalheJogos] = useState({
@@ -36,10 +37,20 @@ const DetalheJogos = ({ params }) => {
     buscarDetalhes();
   }, [params.id]);
 
+  function mudarRota() {
+    window.history.back();
+  }
+
   return (
     <>
-      <div className="flex items-center justify-center h-screen">
-        <div className="bg-gray-800 rounded-lg p-8 w-4/5 text-white">
+      <div className="flex flex-col items-center  h-screen bg-sky-950">
+        <div className="text-3xl font-bold mb-4 text-white self-start bg-gray-800 w-screen p-4">
+          <div className="flex items-center gap-4 ml-2">
+            <ArrowLeft onClick={mudarRota} />
+            <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
+          </div>
+        </div>
+        <div className="bg-gray-900 rounded-lg p-8 w-4/5 text-white border-sky-500 border-[1px]">
           <div className="flex">
             <div className="w-1/2 p-4">
               <img

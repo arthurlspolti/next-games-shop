@@ -12,6 +12,7 @@
     "@clerk/nextjs": "^4.29.2",
     "@prisma/client": "^5.8.0",
     "axios": "^1.6.5",
+    "lucide-react": "^0.309.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
