@@ -20,26 +20,26 @@ const DetalheJogos = ({ params }) => {
     comentario: "",
   });
 
-  const buscarDetalhes = async () => {
-    try {
-      const id = params.id;
-      const resposta = await axios.get(`/api/jogo/${id}`);
-      const dados = resposta.data;
-
-      setDetalheJogos({
-        nome: dados.nome,
-        preco: dados.preco,
-        descricao: dados.descricao,
-        comentarios: dados.comentarios,
-        avaliacoes: dados.avaliacoes,
-        imagemUrl: dados.imagemUrl,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const buscarDetalhes = async () => {
+      try {
+        const id = params.id;
+        const resposta = await axios.get(`/api/jogo/${id}`);
+        const dados = resposta.data;
+
+        setDetalheJogos({
+          nome: dados.nome,
+          preco: dados.preco,
+          descricao: dados.descricao,
+          comentarios: dados.comentarios,
+          avaliacoes: dados.avaliacoes,
+          imagemUrl: dados.imagemUrl,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     buscarDetalhes();
   }, [params.id]);
 

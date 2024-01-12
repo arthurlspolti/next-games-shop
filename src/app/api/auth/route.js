@@ -1,7 +1,7 @@
 import prisma from "@/services/prisma";
 import { currentUser } from "@clerk/nextjs";
 
-export async function GET() {
+export async function GET(request) {
   try {
     const user = await currentUser();
     if (!user) {
@@ -22,6 +22,10 @@ export async function GET() {
       });
     }
 
+    // Evite operações que podem causar problemas durante a renderização estática
+    // ...
+
+    // Se necessário, você pode usar a lógica assíncrona em um contexto diferente
     const salvarUsuario = await prisma.usuario.create({
       data: {
         email: user.emailAddresses[0].emailAddress,
@@ -29,6 +33,7 @@ export async function GET() {
         clerkId: user.id,
       },
     });
+
     console.log(salvarUsuario);
     return new Response(JSON.stringify({ user: salvarUsuario }), {
       status: 200,
