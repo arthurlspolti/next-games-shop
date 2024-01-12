@@ -8,11 +8,27 @@ export async function GET(request, context) {
         id: Number(id),
       },
       include: {
-        avaliacoes: true,
-        comentarios: true,
+        avaliacoes: {
+          include: {
+            usuario: {
+              select: {
+                username: true,
+              },
+            },
+          },
+        },
+        comentarios: {
+          include: {
+            usuario: {
+              select: {
+                username: true,
+              },
+            },
+          },
+        },
       },
     });
-    console.log(jogo);
+
     return new Response(JSON.stringify(jogo), {
       status: 200,
     });

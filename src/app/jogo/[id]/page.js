@@ -10,32 +10,60 @@ const DetalheJogos = ({ params }) => {
     nome: "",
     preco: "",
     descricao: "",
-    comentarios: "",
+    comentarios: [],
+    avaliacoes: [],
     imagemUrl: "",
   });
 
+  const [novaAvaliacao, setNovaAvaliacao] = useState({
+    nota: 1,
+    comentario: "",
+  });
+
+  const buscarDetalhes = async () => {
+    try {
+      const id = params.id;
+      const resposta = await axios.get(`/api/jogo/${id}`);
+      const dados = resposta.data;
+
+      setDetalheJogos({
+        nome: dados.nome,
+        preco: dados.preco,
+        descricao: dados.descricao,
+        comentarios: dados.comentarios,
+        avaliacoes: dados.avaliacoes,
+        imagemUrl: dados.imagemUrl,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const buscarDetalhes = async () => {
-      try {
-        const id = params.id;
-        const resposta = await axios.get(`/api/jogo/${id}`);
-        const dados = resposta.data;
-
-        setDetalheJogos({
-          nome: dados.nome,
-          preco: dados.preco,
-          descricao: dados.descricao,
-          comentarios: dados.comentarios.map((comentario) => comentario.texto),
-          avaliacoes: dados.avaliacoes.map((avaliacao) => avaliacao.nota),
-          imagemUrl: dados.imagemUrl,
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     buscarDetalhes();
   }, [params.id]);
+
+  const enviarComentario = async () => {
+    try {
+      const id = params.id;
+      await axios.post("/api/comentario", {
+        nota: novaAvaliacao.nota,
+        comentario: novaAvaliacao.comentario,
+        jogoId: id,
+      });
+
+      // Após a submissão bem-sucedida, buscar novamente os detalhes do jogo
+      buscarDetalhes();
+
+      // Limpar o estado da nova avaliação
+      setNovaAvaliacao({
+        nota: 1,
+        comentario: "",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   function mudarRota() {
     window.history.back();
@@ -43,14 +71,14 @@ const DetalheJogos = ({ params }) => {
 
   return (
     <>
-      <div className="flex flex-col items-center  h-screen bg-sky-950">
+      <div className="flex flex-col items-center h-screen bg-sky-950">
         <div className="text-3xl font-bold mb-4 text-white self-start bg-gray-800 w-screen p-4">
           <div className="flex items-center gap-4 ml-2">
             <ArrowLeft onClick={mudarRota} />
             <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
           </div>
         </div>
-        <div className="bg-gray-900 rounded-lg p-8 w-4/5 text-white border-sky-500 border-[1px]">
+        <div className="bg-gray-900 rounded-lg p-8 w-4/5 text-white border-sky-500 border-[1px] overflow-y-auto">
           <div className="flex">
             <div className="w-1/2 p-4">
               <img
@@ -69,7 +97,7 @@ const DetalheJogos = ({ params }) => {
                     <h2 className="text-3xl font-semibold">
                       R$: {detalheJogos.preco}
                     </h2>
-                    <button className="bg-blue-500 text-white px-6 py-3 rounded-md">
+                    <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-md">
                       Comprar
                     </button>
                   </div>
@@ -78,16 +106,70 @@ const DetalheJogos = ({ params }) => {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <div className="mb-4">
-                    Comentários: {detalheJogos.comentarios}
-                  </div>
                   <div className="flex items-center">
-                    <div className="mr-4">
-                      Avaliações: {detalheJogos.avaliacoes}
+                    <div className="mr-4 flex">
+                      <select
+                        value={novaAvaliacao.nota}
+                        onChange={(e) =>
+                          setNovaAvaliacao({
+                            ...novaAvaliacao,
+                            nota: parseInt(e.target.value, 10),
+                          })
+                        }
+                        className="mr-2 bg-gray-800 text-white p-2 rounded-md border border-gray-600"
+                      >
+                        {[1, 2, 3, 4, 5].map((nota) => (
+                          <option key={nota} value={nota}>
+                            {nota}
+                          </option>
+                        ))}
+                      </select>
+                      <textarea
+                        value={novaAvaliacao.comentario}
+                        onChange={(e) =>
+                          setNovaAvaliacao({
+                            ...novaAvaliacao,
+                            comentario: e.target.value,
+                          })
+                        }
+                        rows="3"
+                        required
+                        placeholder="Escreva um comentário..."
+                        className="mr-2 p-2 border rounded-md bg-gray-800 text-white border-gray-600"
+                      />
+                      <button
+                        onClick={enviarComentario}
+                        className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md"
+                      >
+                        Enviar
+                      </button>
                     </div>
-                    {/* Adicione aqui elementos para a avaliação, como estrelas ou outros componentes */}
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="ml-8 border-l-2 border-gray-700 pl-4">
+              <div className="mb-4">
+                <h2 className="text-xl font-bold mb-2">Comentários:</h2>
+                {detalheJogos.comentarios.map((comentario) => (
+                  <div key={comentario.id} className="mb-2">
+                    <p className="text-gray-300">{comentario.texto}</p>
+                    <p className="text-gray-500">
+                      @{comentario.usuario.username}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="mb-4">
+                <h2 className="text-xl font-bold mb-2">Avaliações:</h2>
+                {detalheJogos.avaliacoes.map((avaliacao) => (
+                  <div key={avaliacao.id} className="mb-2">
+                    <p className="text-gray-300">{avaliacao.nota} estrelas</p>
+                    <p className="text-gray-500">
+                      @{avaliacao.usuario.username}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

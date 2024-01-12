@@ -8,6 +8,18 @@ export default function Home() {
   const [jogos, setJogos] = useState([]);
   const [classeSelecionada, setClasseSelecionada] = useState(null);
 
+  const salvarUsuario = async () => {
+    try {
+      const resposta = await axios.get("/api/auth");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    salvarUsuario();
+  }, []);
+
   useEffect(() => {
     const buscarDados = async () => {
       try {
@@ -55,14 +67,14 @@ export default function Home() {
             className="rounded-md p-4 bg-gray-900 hover:bg-gray-800 text-white"
             onClick={() => setClasseSelecionada(2)}
           >
-            Tiro em Primeira Pessoa
+            Tiro em Terceira Pessoa
           </button>
 
           <button
             className="rounded-md p-4 bg-gray-900 hover:bg-gray-800 text-white"
             onClick={() => setClasseSelecionada(3)}
           >
-            Tiro em Terceira Pessoa
+            Tiro em Primeira Pessoa
           </button>
         </div>
       </div>

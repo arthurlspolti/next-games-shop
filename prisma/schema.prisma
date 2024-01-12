@@ -13,6 +13,17 @@ datasource db {
 //   url = env("MYSQL_URL")
 // }
 
+model Usuario {
+  id Int @id @default(autoincrement())
+  clerkId String @unique
+  email String
+  username String?
+
+  comentarios Comentario[]
+  avaliacoes Avaliacao[]
+  carrinho Carrinho[]
+}
+
 model Jogo {
   id        Int      @id @default(autoincrement())
   nome      String
@@ -23,6 +34,7 @@ model Jogo {
   classeId  Int
   comentarios Comentario[]
   avaliacoes Avaliacao[]
+  carrinhos Carrinho[]
 }
 
 model Classe {
@@ -34,6 +46,8 @@ model Classe {
 model Comentario {
   id     Int    @id @default(autoincrement())
   texto  String
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
   jogo   Jogo   @relation(fields: [jogoId], references: [id])
   jogoId Int
 }
@@ -41,6 +55,17 @@ model Comentario {
 model Avaliacao {
   id     Int    @id @default(autoincrement())
   nota   Int
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
   jogo   Jogo   @relation(fields: [jogoId], references: [id])
+  jogoId Int
+}
+
+model Carrinho {
+  id Int @id @default(autoincrement())
+  quantidade Int
+  usuario Usuario @relation(fields: [usuarioId],references: [id])
+  usuarioId Int
+  jogo Jogo @relation(fields: [jogoId],references: [id])
   jogoId Int
 }
