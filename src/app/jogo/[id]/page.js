@@ -20,6 +20,18 @@ const DetalheJogos = ({ params }) => {
     comentario: "",
   });
 
+  const salvarUsuario = async () => {
+    try {
+      const resposta = await axios.get("/api/salvarUsuario");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    salvarUsuario();
+  }, []);
+
   const buscarDetalhes = async () => {
     try {
       const id = params.id;
