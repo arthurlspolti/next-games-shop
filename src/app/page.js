@@ -9,18 +9,6 @@ export default function Home() {
   const [classeSelecionada, setClasseSelecionada] = useState(null);
   const [valorPesquisa, setValorPesquisa] = useState("");
 
-  const salvarUsuario = async () => {
-    try {
-      const resposta = await axios.get("/api/salvarUsuario");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    salvarUsuario();
-  }, []);
-
   useEffect(() => {
     const buscarDados = async () => {
       try {
