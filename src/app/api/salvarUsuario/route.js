@@ -1,9 +1,12 @@
 import prisma from "@/services/prisma";
 import { currentUser } from "@clerk/nextjs";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request) {
   try {
     const user = await currentUser();
+
     if (!user) {
       return new Response(JSON.stringify({ user: "não tem usuario" }), {
         status: 401,
@@ -20,24 +23,20 @@ export async function GET(request) {
       return new Response(JSON.stringify({ user: usuarioExiste }), {
         status: 200,
       });
+    } else {
+      const salvarUsuario = await prisma.usuario.create({
+        data: {
+          email: user.emailAddresses[0].emailAddress,
+          username: user.username,
+          clerkId: user.id,
+        },
+      });
+
+      console.log(salvarUsuario);
+      return new Response(JSON.stringify({ user: salvarUsuario }), {
+        status: 200,
+      });
     }
-
-    // Evite operações que podem causar problemas durante a renderização estática
-    // ...
-
-    // Se necessário, você pode usar a lógica assíncrona em um contexto diferente
-    const salvarUsuario = await prisma.usuario.create({
-      data: {
-        email: user.emailAddresses[0].emailAddress,
-        username: user.username,
-        clerkId: user.id,
-      },
-    });
-
-    console.log(salvarUsuario);
-    return new Response(JSON.stringify({ user: salvarUsuario }), {
-      status: 200,
-    });
   } catch (error) {
     console.log(`Esta dando o erro: ${error}`);
   }

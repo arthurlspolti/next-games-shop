@@ -10,7 +10,7 @@ export default function Home() {
 
   const salvarUsuario = async () => {
     try {
-      const resposta = await axios.get("/api/auth");
+      const resposta = await axios.get("/api/salvarUsuario");
     } catch (err) {
       console.log(err);
     }
