@@ -7,7 +7,12 @@ export async function GET(request, context) {
       where: {
         id: Number(id),
       },
+      include: {
+        avaliacoes: true,
+        comentarios: true,
+      },
     });
+    console.log(jogo);
     return new Response(JSON.stringify(jogo), {
       status: 200,
     });

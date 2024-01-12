@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 
 const DetalheJogos = ({ params }) => {
   const [detalheJogos, setDetalheJogos] = useState({
-    titulo: "",
+    nome: "",
     preco: "",
     descricao: "",
     comentarios: "",
@@ -25,8 +25,8 @@ const DetalheJogos = ({ params }) => {
           nome: dados.nome,
           preco: dados.preco,
           descricao: dados.descricao,
-          comentarios: dados.comentarios,
-          avaliacoes: dados.avaliacoes,
+          comentarios: dados.comentarios.map((comentario) => comentario.texto),
+          avaliacoes: dados.avaliacoes.map((avaliacao) => avaliacao.nota),
           imagemUrl: dados.imagemUrl,
         });
       } catch (err) {
@@ -79,11 +79,11 @@ const DetalheJogos = ({ params }) => {
                 </div>
                 <div className="mt-6">
                   <div className="mb-4">
-                    Comentarios: {detalheJogos.comentarios}
+                    Comentários: {detalheJogos.comentarios}
                   </div>
                   <div className="flex items-center">
                     <div className="mr-4">
-                      Avaliações: {detalheJogos.avalicoes}
+                      Avaliações: {detalheJogos.avaliacoes}
                     </div>
                     {/* Adicione aqui elementos para a avaliação, como estrelas ou outros componentes */}
                   </div>

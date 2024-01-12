@@ -18,7 +18,7 @@ model Jogo {
   nome      String
   descricao String
   imagemUrl String
-  preco     Float
+  preco     Decimal @db.Decimal(10, 2)
   classe    Classe   @relation(fields: [classeId], references: [id])
   classeId  Int
   comentarios Comentario[]
