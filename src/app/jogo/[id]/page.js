@@ -86,7 +86,7 @@ const DetalheJogos = ({ params }) => {
       <div className="flex flex-col items-center h-screen bg-sky-950">
         <div className="text-3xl font-bold mb-4 text-white self-start bg-gray-800 w-screen p-4">
           <div className="flex items-center gap-4 ml-2">
-            <ArrowLeft onClick={mudarRota} />
+            <ArrowLeft onClick={mudarRota} className="cursor-pointer" />
             <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
           </div>
         </div>
