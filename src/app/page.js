@@ -7,6 +7,7 @@ import { UserButton } from "@clerk/nextjs";
 export default function Home() {
   const [jogos, setJogos] = useState([]);
   const [classeSelecionada, setClasseSelecionada] = useState(null);
+  const [valorPesquisa, setValorPesquisa] = useState("");
 
   const salvarUsuario = async () => {
     try {
@@ -34,8 +35,12 @@ export default function Home() {
     buscarDados();
   }, []);
 
-  const jogosFiltrados = jogos.filter((jogo) =>
-    classeSelecionada ? jogo.classeId === classeSelecionada : true
+  const jogosFiltrados = jogos.filter(
+    (jogo) =>
+      (classeSelecionada ? jogo.classeId === classeSelecionada : true) &&
+      (valorPesquisa.length > 0
+        ? jogo.nome.toLowerCase().includes(valorPesquisa.toLowerCase())
+        : true)
   );
 
   return (
@@ -76,6 +81,11 @@ export default function Home() {
           >
             Tiro em Primeira Pessoa
           </button>
+          <input
+            className="rounded-md p-4 bg-gray-900 hover:bg-gray-800 text-white"
+            placeholder="Pesquisar"
+            onChange={(e) => setValorPesquisa(e.target.value)}
+          />
         </div>
       </div>
       <div className="flex justify-center items-center flex-wrap gap-4 p-4 bg-sky-950">
