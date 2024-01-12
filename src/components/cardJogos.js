@@ -14,7 +14,7 @@ const Card = ({ nome, descricao, imagemUrl, id }) => {
         <h1 className="text-white text-xl font-semibold truncate">{nome}</h1>
         <Link
           href={`/jogo/${id}`}
-          className="mt-4 border-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
+          className="mt-4 bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
         >
           Ver detalhes
         </Link>
