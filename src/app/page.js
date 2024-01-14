@@ -4,6 +4,7 @@ import Card from "@/components/cardJogos";
 import axios from "axios";
 import { UserButton } from "@clerk/nextjs";
 import IconeCarrinho from "@/components/iconeCarrinho";
+import Badge from "@/components/bagde";
 
 export default function Home() {
   const [jogos, setJogos] = useState([]);
@@ -40,6 +41,7 @@ export default function Home() {
             <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
           </div>
           <div className="flex items-center justify-center gap-8">
+            <Badge />
             <IconeCarrinho />
             <UserButton />
           </div>

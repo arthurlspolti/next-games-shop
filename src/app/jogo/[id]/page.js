@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import IconeCarrinho from "@/components/iconeCarrinho";
+import Badge from "@/components/bagde";
+import { UserButton } from "@clerk/nextjs";
 
 const DetalheJogos = ({ params }) => {
   const [detalheJogos, setDetalheJogos] = useState({
@@ -102,8 +104,10 @@ const DetalheJogos = ({ params }) => {
             <ArrowLeft onClick={mudarRota} className="cursor-pointer" />
             <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
           </div>
-          <div>
+          <div className="flex items-center gap-8">
+            <Badge />
             <IconeCarrinho />
+            <UserButton />
           </div>
         </div>
         <div className="bg-gray-900 rounded-lg p-8 w-4/5 text-white border-sky-500 border-[1px] overflow-y-auto">

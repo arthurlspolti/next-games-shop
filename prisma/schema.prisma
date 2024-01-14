@@ -21,7 +21,8 @@ model Usuario {
 
   comentarios Comentario[]
   avaliacoes Avaliacao[]
-  carrinho Carrinho[]
+  carrinhos Carrinho[]
+  compras Compra[]
 }
 
 model Jogo {
@@ -34,7 +35,8 @@ model Jogo {
   classeId  Int
   comentarios Comentario[]
   avaliacoes Avaliacao[]
-  carrinhos Carrinho[]
+  carrinhoJogos CarrinhoJogo[]
+  compras Compra[]
 }
 
 model Classe {
@@ -63,10 +65,25 @@ model Avaliacao {
 
 model Carrinho {
   id Int @id @default(autoincrement())
-  quantidade Int @default(1)
+  usuario Usuario @relation(fields: [usuarioId],references: [clerkId])
+  usuarioId String
+  carrinhoJogos CarrinhoJogo[]
+}
+
+model CarrinhoJogo {
+  id Int @id @default(autoincrement())
+  carrinho Carrinho @relation(fields: [carrinhoId], references: [id])
+  carrinhoId Int
+  jogo Jogo @relation(fields: [jogoId], references: [id])
+  jogoId Int
+}
+
+model Compra {
+  id Int @id @default(autoincrement())
   usuario Usuario @relation(fields: [usuarioId],references: [clerkId])
   usuarioId String
   jogo Jogo @relation(fields: [jogoId],references: [id])
   jogoId Int
 }
+
 
