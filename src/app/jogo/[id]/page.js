@@ -4,6 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
+import IconeCarrinho from "@/components/iconeCarrinho";
 
 const DetalheJogos = ({ params }) => {
   const [detalheJogos, setDetalheJogos] = useState({
@@ -55,6 +56,18 @@ const DetalheJogos = ({ params }) => {
     buscarDetalhes();
   }, [params.id]);
 
+  async function adicionarCarrinho() {
+    try {
+      const id = params.id;
+      console.log(id);
+      await axios.post("/api/carrinho", {
+        jogoId: id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const enviarComentario = async () => {
     try {
       const id = params.id;
@@ -84,10 +97,13 @@ const DetalheJogos = ({ params }) => {
   return (
     <>
       <div className="flex flex-col items-center h-screen bg-sky-950">
-        <div className="text-3xl font-bold mb-4 text-white self-start bg-gray-800 w-screen p-4">
+        <div className="flex justify-between text-3xl font-bold mb-4 text-white self-start bg-gray-800 w-screen p-4">
           <div className="flex items-center gap-4 ml-2">
             <ArrowLeft onClick={mudarRota} className="cursor-pointer" />
             <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
+          </div>
+          <div>
+            <IconeCarrinho />
           </div>
         </div>
         <div className="bg-gray-900 rounded-lg p-8 w-4/5 text-white border-sky-500 border-[1px] overflow-y-auto">
@@ -109,7 +125,10 @@ const DetalheJogos = ({ params }) => {
                     <h2 className="text-3xl font-semibold">
                       R$: {detalheJogos.preco}
                     </h2>
-                    <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-md">
+                    <button
+                      onClick={() => adicionarCarrinho()}
+                      className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-md"
+                    >
                       Comprar
                     </button>
                   </div>

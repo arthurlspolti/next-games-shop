@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Card from "@/components/cardJogos";
 import axios from "axios";
 import { UserButton } from "@clerk/nextjs";
+import IconeCarrinho from "@/components/iconeCarrinho";
 
 export default function Home() {
   const [jogos, setJogos] = useState([]);
@@ -38,8 +39,10 @@ export default function Home() {
           <div className="flex items-center gap-4 ml-2">
             <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
           </div>
-
-          <UserButton />
+          <div className="flex items-center justify-center gap-8">
+            <IconeCarrinho />
+            <UserButton />
+          </div>
         </div>
         <div className="flex bg-sky-950">
           <div className="m-4 flex gap-4 items-center justify-center w-screen">

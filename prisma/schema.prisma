@@ -17,7 +17,7 @@ model Usuario {
   id Int @id @default(autoincrement())
   clerkId String @unique
   email String
-  username String?
+  username String @unique
 
   comentarios Comentario[]
   avaliacoes Avaliacao[]
@@ -63,9 +63,10 @@ model Avaliacao {
 
 model Carrinho {
   id Int @id @default(autoincrement())
-  quantidade Int
-  usuario Usuario @relation(fields: [usuarioId],references: [id])
-  usuarioId Int
+  quantidade Int @default(1)
+  usuario Usuario @relation(fields: [usuarioId],references: [clerkId])
+  usuarioId String
   jogo Jogo @relation(fields: [jogoId],references: [id])
   jogoId Int
 }
+
