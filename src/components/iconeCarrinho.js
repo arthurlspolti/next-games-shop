@@ -40,16 +40,20 @@ const BotaoComprar = ({ jogos, atualizarCarrinho }) => {
   );
 };
 
-const MiniCard = ({ jogo, onRemove }) => {
+const MiniCard = ({ jogo, onRemove, onQuantityChange }) => {
   const [quantidade, setQuantidade] = useState(1);
 
   const handleIncrease = () => {
-    setQuantidade(quantidade + 1);
+    const novaQuantidade = quantidade + 1;
+    setQuantidade(novaQuantidade);
+    onQuantityChange(jogo.id, novaQuantidade); // Altere esta linha
   };
 
   const handleDecrease = () => {
     if (quantidade > 1) {
-      setQuantidade(quantidade - 1);
+      const novaQuantidade = quantidade - 1;
+      setQuantidade(novaQuantidade);
+      onQuantityChange(jogo.id, novaQuantidade); // Altere esta linha
     }
   };
 
@@ -99,22 +103,17 @@ const MiniCard = ({ jogo, onRemove }) => {
   );
 };
 
-const calcularTotal = (jogos) => {
-  // Calcula o total somando os preços de todos os jogos
-  const total = jogos.reduce((soma, jogo) => soma + Number(jogo.preco), 0);
-
-  // Formata o total para o formato brasileiro
-  const totalFormatado = total.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-
-  return totalFormatado;
-};
-
 const IconeCarrinho = () => {
   const [dadosCarrinho, setDadosCarrinho] = useState(null);
   const [carregando, setCarregando] = useState(false);
+  const [quantidades, setQuantidades] = useState({});
+
+  const handleQuantityChange = (id, quantidade) => {
+    setQuantidades({
+      ...quantidades,
+      [id]: quantidade,
+    });
+  };
 
   const buscarDados = async () => {
     setCarregando(true);
@@ -135,6 +134,27 @@ const IconeCarrinho = () => {
 
   const handleRemove = () => {
     buscarDados();
+  };
+
+  const calcularTotal = (jogos) => {
+    const total = jogos.reduce((soma, jogo) => {
+      const preco = Number(jogo.preco);
+      const quantidade = Number(quantidades[jogo.id] || 1);
+
+      if (isNaN(preco) || isNaN(quantidade)) {
+        console.error("Preço ou quantidade inválidos", jogo);
+        return soma;
+      }
+
+      return soma + preco * quantidade;
+    }, 0);
+
+    const totalFormatado = total.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+
+    return totalFormatado;
   };
 
   return (
@@ -161,6 +181,7 @@ const IconeCarrinho = () => {
                           key={index}
                           jogo={item}
                           onRemove={handleRemove}
+                          onQuantityChange={handleQuantityChange} // Esta linha está correta
                         />
                       ))
                     : "Carrinho vazio"}
