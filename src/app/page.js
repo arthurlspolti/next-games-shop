@@ -35,19 +35,21 @@ export default function Home() {
 
   return (
     <>
-      <div className="h-screen bg-sky-950">
+      <div className="min-h-screen bg-sky-950">
         <div className="flex justify-between bg-gray-800 p-4 items-center">
           <div className="flex items-center gap-4 ml-2">
-            <h1 className="text-white text-3xl font-semibold">GamesCom</h1>
+            <h1 className="text-white text-2xl md:text-3xl font-semibold">
+              GamesCom
+            </h1>
           </div>
-          <div className="flex items-center justify-center gap-8">
+          <div className="flex items-center justify-center gap-4 md:gap-8">
             <Badge />
             <IconeCarrinho />
             <UserButton />
           </div>
         </div>
-        <div className="flex bg-sky-950">
-          <div className="m-4 flex gap-4 items-center justify-center w-screen">
+        <div className="flex flex-col md:flex-row bg-sky-950">
+          <div className="m-4 flex flex-col md:flex-row gap-4 items-center justify-center w-full md:w-screen">
             <button
               className="rounded-md p-4 bg-gray-900 hover:bg-gray-800 text-white"
               onClick={() => setClasseSelecionada(null)}
