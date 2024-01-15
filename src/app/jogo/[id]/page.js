@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import IconeCarrinho from "@/components/iconeCarrinho";
 import Badge from "@/components/bagde";
 import { UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const DetalheJogos = ({ params }) => {
   const [detalheJogos, setDetalheJogos] = useState({
@@ -22,6 +23,8 @@ const DetalheJogos = ({ params }) => {
     nota: 1,
     comentario: "",
   });
+
+  const router = useRouter();
 
   const salvarUsuario = async () => {
     try {
@@ -93,7 +96,7 @@ const DetalheJogos = ({ params }) => {
   };
 
   function mudarRota() {
-    window.history.back();
+    router.push("/");
   }
 
   return (
