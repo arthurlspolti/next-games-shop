@@ -11,7 +11,7 @@ const Card = ({ nome, descricao, imagemUrl, id }) => {
         className="w-full h-64 md:h-48 lg:h-64 rounded-lg object-fill"
       />
       <div className="flex flex-col items-center justify-center text-wrap text-center mt-4">
-        <h1 className="text-white text-lg md:text-xl lg:text-2xl font-semibold truncate">
+        <h1 className="text-white text-lg md:text-xl lg:text-2xl font-semibold truncate max-w-[356px]">
           {nome}
         </h1>
         <Link
