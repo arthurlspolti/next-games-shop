@@ -48,7 +48,6 @@ export async function POST(request) {
   try {
     const user = await currentUser();
     const userId = user.id;
-    console.log(userId);
 
     const { jogoId } = await request.json();
 

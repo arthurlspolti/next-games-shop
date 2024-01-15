@@ -32,7 +32,6 @@ export async function GET(request) {
         },
       });
 
-      console.log(salvarUsuario);
       return new Response(JSON.stringify({ user: salvarUsuario }), {
         status: 200,
       });

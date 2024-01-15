@@ -4,7 +4,6 @@ import prisma from "@/services/prisma";
 export async function POST(request) {
   const user = await currentUser();
   const { idJogos } = await request.json();
-  console.log(idJogos);
 
   try {
     const compra = await Promise.all(
@@ -59,7 +58,6 @@ export async function GET() {
     });
 
     const iconeVisivel = compras.length > 5;
-    console.log(iconeVisivel);
 
     return new Response(JSON.stringify(iconeVisivel), { status: 200 });
   } catch (error) {

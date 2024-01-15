@@ -64,7 +64,6 @@ const DetalheJogos = ({ params }) => {
   async function adicionarCarrinho() {
     try {
       const id = params.id;
-      console.log(id);
       await axios.post("/api/carrinho", {
         jogoId: id,
       });

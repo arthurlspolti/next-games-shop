@@ -18,7 +18,6 @@ const BotaoComprar = ({ jogos, atualizarCarrinho }) => {
       const resposta = await axios.post("/api/comprar", {
         idJogos: jogos.map((jogo) => jogo.id),
       });
-      console.log(resposta.data);
 
       setCompraRealizada(true);
 
@@ -63,7 +62,6 @@ const MiniCard = ({ jogo, onRemove, onQuantityChange }) => {
       const resposta = await axios.delete("/api/carrinho", {
         data: { jogoId: jogo.id },
       });
-      console.log(resposta.data);
       onRemove();
     } catch (erro) {
       console.error(`Ocorreu o erro: ${erro}`);
@@ -121,8 +119,6 @@ const IconeCarrinho = () => {
     try {
       const resposta = await axios.get("/api/carrinho");
       setDadosCarrinho(resposta.data);
-      console.log(resposta.data);
-      console.log(dadosCarrinho);
     } catch (erro) {
       console.log(`Ocorreu o erro: ${erro}`);
     }

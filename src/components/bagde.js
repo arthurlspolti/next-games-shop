@@ -9,7 +9,6 @@ const Badge = () => {
     const buscarDados = async () => {
       try {
         const resposta = await axios.get("/api/comprar");
-        console.log(resposta.data);
         setIconeVisivel(resposta.data);
       } catch (erro) {
         console.error(`Ocorreu um erro ao buscar os dados: ${erro}`);
