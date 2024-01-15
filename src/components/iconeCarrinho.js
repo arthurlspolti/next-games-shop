@@ -29,12 +29,15 @@ const BotaoComprar = ({ jogos, atualizarCarrinho }) => {
   };
 
   return (
-    <button
-      onClick={handleCompra}
-      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2"
-    >
-      Comprar
-    </button>
+    <div className="flex flex-col mt-4">
+      <p>Confirmar compra</p>
+      <button
+        onClick={handleCompra}
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 w-[120px]"
+      >
+        Comprar
+      </button>
+    </div>
   );
 };
 
