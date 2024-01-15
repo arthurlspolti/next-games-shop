@@ -4,12 +4,10 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ShoppingCart } from "lucide-react";
 import axios from "axios";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const BotaoComprar = ({ jogos, atualizarCarrinho }) => {
   const [compraRealizada, setCompraRealizada] = useState(false);

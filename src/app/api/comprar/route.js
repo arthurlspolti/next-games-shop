@@ -45,7 +45,7 @@ export async function GET() {
   const user = await currentUser();
 
   if (!user) {
-    return res.status(401).json({ error: "Usuário não autenticado" });
+    return new Response(JSON.stringify(false), { status: 200 });
   }
 
   try {
